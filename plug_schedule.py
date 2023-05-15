@@ -2,9 +2,9 @@ import asyncio
 import kasa
 from config import ip_address  # config just declares ip_address as a string
 
-ON_TIME_S = 2
-OFF_TIME_S = 8
-RETRY_DELAY_S = 1
+ON_TIME_S = 5 * 60
+OFF_TIME_S = 25 * 60
+RETRY_DELAY_S = 5
 
 
 async def main() -> None:
