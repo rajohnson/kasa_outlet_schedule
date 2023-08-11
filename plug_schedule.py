@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import datetime
 
 import kasa
@@ -27,14 +28,22 @@ async def main() -> None:
             ON_TIME_S = NIGHT_ON_TIME_S
             OFF_TIME_S = NIGHT_OFF_TIME_S
         try:
+            logging.info("Turning on")
             await device.turn_on()
+            logging.info(f"Waiting for {ON_TIME_S} seconds")
             await asyncio.sleep(ON_TIME_S)
+            logging.info("Turning off")
             await device.turn_off()
+            logging.info(f"Waiting for {OFF_TIME_S} seconds")
             await asyncio.sleep(OFF_TIME_S)
         except kasa.SmartDeviceException:
-            print("Device is unreachable")
+            logging.error("Device is unreachable")
             await asyncio.sleep(RETRY_DELAY_S)
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        format="%(asctime)s - %(message)s",
+        level=logging.DEBUG,
+    )
     asyncio.run(main())
